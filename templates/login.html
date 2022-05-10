@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>CoroView</title>
+    <style>
+      .button {
+        background-color: #1F77B4;
+        color: white;
+        height: 50px;
+        width: 150px;
+        border-radius: 8px;
+        font-weight: bold;
+      }
+      .button:hover {
+        background-color: lightgray;
+        color: #1F77B4;
+        border-radius: 8px;
+        font-weight: bold;
+      }
+      .menu {
+        width:296px;
+        height: 196px;
+        border: 1px solid black;
+      }
+    </style>
+</head>
+
+<body>
+  <div align="center">
+    <img align="center" src="{{url_for('static', filename='DP_logo.png')}}" width="296" height="191"/>
+    <div align="center" class="menu">
+      <p><a href=main ><button class="button">Start</button></a></p>
+      <br>
+      <p style="color:gray;">UDI: XXX XXX XXX</p>
+      <p style="color:gray;">Version: 1.0</p>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <style>
+        p.solid {border-style: solid;}
+        
+          .main_div {
+            overflow:hidden;
+          }
+
+          .content {
+            float:right;
+            width:84%;
+            position: fixed;
+            margin-left: 265px;
+            z-index:0;
+          }
+
+          .menu {
+            float:left;
+            width:296px;
+            height: 795px;
+            border: 1px solid black;
+            position: fixed;
+            z-index:10;
+          }
+
+          #bottom_menu {
+            position:relative; 
+            top:65px;
+          }
+
+          .data_table {
+            position: fixed;
+            z-index:0;
+            width:84%;
+          }
+          .data_plot {
+            position: fixed;
+            margin-top: 350px;
+            z-index:1;
+            width:84%;
+          }
+          .button {
+            background-color: #1F77B4;
+            color: white;
+            height: 50px;
+            width: 150px;
+            border-radius: 8px;
+            font-weight: bold;
+          }
+          .button:hover {
+            background-color: lightgray;
+            color: #1F77B4;
+            font-weight: bold;
+          }
+          .footer {
+            background-color: #1F77B4;
+            color: white;
+            width: 100%;
+            height: 40px;
+            bottom: 0;
+            left: 0;
+            position: fixed;
+            text-align: center;
+          }
+    </style>
+</head>
+
+<body>
+    
+
+    <div class="main_div">
+        <div class="menu" align="center">
+            <img src="{{url_for('static', filename='DP_logo.png')}}" width="296" height="191"/>
+            <div class="top_menu">
+                <h3>Menu</h3>
+                <p>Select patient</p>
+                <form method="GET" action="/patient">
+                    <select name="id" onchange="this.form.submit()">
+                        {% for indx in ids %}
+            
+                        <option value="{{indx}}" {% if indx==id %}selected{% endif %}>{{indx}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <br>
+                <p align="center"><a href=title ><button class="button">Return to Title screen</button></a></p>
+            </div>
+            <div id="bottom_menu">
+                <h3 align="center">Filtration menu</h3>
+                <p>Country:</p>
+                <form class="ctr" method="GET" action="/main">
+                    <select name="country" onchange="this.form.submit()">
+                        {% for ctr in countries %}
+            
+                        <option value="{{ctr}}" {% if ctr==country %}selected{% endif %}>{{ctr}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <p>Age:</p>
+                <form method="GET" action="/main">
+                    <select name="age" onchange="this.form.submit()">
+                        {% for ag in ages %}
+            
+                        <option value="{{ag}}" {% if ag==age %}selected{% endif %}>{{ag}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <p>Gender:</p>
+                <form method="GET" action="/main">
+                    <select name="gender" onchange="this.form.submit()">
+                        {% for gdr in genders %}
+            
+                        <option value="{{gdr}}" {% if gdr==gender %}selected{% endif %}>{{gdr}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+                <p><a href=main ><button class="button">Clear Filter</button></a></p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="data_table" id="table">
+                <script>
+                    var graphs = {{ table | safe}};
+                    Plotly.plot('table', graphs, {});
+                </script>
+            </div>
+            <!--<h1>Příznaky pacientů s covid-19 v {{ country }}</h1>-->
+            <div class="data_plot" id="plot">
+                <script>
+                    var graphs = {{ plot | safe}};
+                    Plotly.plot('plot', graphs, {});
+                </script>
+            </div>
+        </div>
+        <div class="footer">
+            <p> &copy; Martin Staněk</p>
+        </div>
+    </div>
+</body>
+
+</html>
